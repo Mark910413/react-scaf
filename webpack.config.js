@@ -5,27 +5,35 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
  filename: "./index.html"
 });
 module.exports = {
- entry: path.join(__dirname, "./src/Index.jsx"),
+  entry: path.join(__dirname, "./src/Index.jsx"),
 
- devtool: 'inline-source-map',
- module: {
-   rules: [{
-     test: /\.(js|jsx)$/,
-   use: "babel-loader",
-   exclude: /node_modules/
- },{
-   test: /\.(css|less)$/,
-   use: ["style-loader", "css-loader", "less-loader"]
- }]
-},
- plugins: [htmlWebpackPlugin],
- resolve: {
-   extensions: [".js", ".jsx"],
-   alias: {
-     '@page': path.resolve(__dirname, './src/page'),
-     '@store': path.resolve(__dirname, './src/store'),
-   }
- },
+  devtool: 'inline-source-map',
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        use: "babel-loader",
+        exclude: /node_modules/
+      },
+      {
+        test: /\.(css|less)$/,
+        use: ["style-loader", "css-loader", "less-loader"]
+      },
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/
+      }
+    ]  
+  },
+  plugins: [htmlWebpackPlugin],
+  resolve: {
+    extensions: [".js", ".jsx", "ts", ".tsx"],
+    alias: {
+      '@page': path.resolve(__dirname, './src/page'),
+      '@store': path.resolve(__dirname, './src/store'),
+    }
+  },
   devServer: {
    port: 3000,
    host: 'localhost',
